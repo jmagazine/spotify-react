@@ -22,17 +22,10 @@ function App() {
 
   const tokenView = (
     <>
-      <div
-        style={{
-          display: "flex",
-          flexDirection: "column",
-        }}
-      >
+      <div className="p-0 d-flex mb-3 flex-column justify-content-center">
         <Navbar />
         <SearchBar setTracks={setTracks} />
-        <div style={{ marginTop: "20px" }}>
-          <SongsContainer tracks={tracks} />
-        </div>
+        <SongsContainer tracks={tracks} />
       </div>
     </>
   );

@@ -29,41 +29,17 @@ function SongCard({ track }: Props) {
   };
 
   return (
-    <div
-      onMouseEnter={() => setHovered(true)}
-      onMouseLeave={() => setHovered(false)}
-      className="card"
-      style={{
-        width: "18rem",
-        justifyContent: "space-around",
-        scale: "95%",
-        marginTop: "3%",
-      }}
-    >
-      <div onClick={handleClick}>
-        <img
-          src={track.image.url}
-          className="card-img-top"
-          alt="..."
-          style={{ position: "relative", zIndex: 0 }}
-        />
-        {hovered && <PlayButton icon={icon} />}
-      </div>
-      <div className="card-body d-flex flex-column">
-        <div>
-          <h5 className="card-title">{track.title}</h5>
-          <p className="card-text">{track.artists.join(", ")}</p>
-        </div>
-        <div className="mt-auto">
-          <a
-            style={{ minWidth: "100%" }}
-            href={track.link}
-            target="_blank"
-            className="btn btn-primary btn-full-width"
-          >
-            Listen on Spotify
-          </a>
-        </div>
+    <div className="card mt-3 mb-3 ms-3 me-3" style={{ width: "18rem" }}>
+      <img src={track.image.url} className="card-img-top" alt="..." />
+      <div className="card-body">
+        <h5 className="card-title">{track.title}</h5>
+        <p className="card-text">{track.artists.join(",")}</p>
+        <a
+          href={track.link}
+          className="btn btn-primary d-flex justify-content-center fs-5 bg-dark"
+        >
+          Listen on Spotify
+        </a>
       </div>
     </div>
   );

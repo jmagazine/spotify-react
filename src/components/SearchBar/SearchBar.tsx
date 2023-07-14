@@ -34,40 +34,30 @@ function SearchBar({ setTracks }: Props) {
   };
 
   return (
-    <div className="mt-3">
-      <div className="container fluid" style={{ position: "relative" }}>
-        <input
-          ref={inputRef} // Assign the ref to the input element
-          style={{ position: "absolute", zIndex: "0" }}
-          className="form-control form-control-lg"
-          type="text"
-          placeholder="Search"
-          aria-label=".form-control-lg example"
-          value={searchText}
-          onChange={(e) => setSearchText(e.target.value)}
-          onKeyDown={handleKeyDown} // Call handleKeyPress function on key press
-        />
-        <img
-          src="src\assets\search.svg"
-          alt="Logo"
-          width="40"
-          height="40"
-          className={`d-inline-block align-text-top ${
-            vibrate && "vibrate-animation"
-          }`}
-          style={{
-            position: "relative",
-            float: "right",
-            zIndex: "1",
-            marginTop: "5px",
-            marginRight: "-10px",
-          }}
-          draggable="false"
-          onMouseEnter={() => setVibrate(true)}
-          onAnimationEnd={() => setVibrate(false)}
-          onClick={handleSearch}
-        />
-      </div>
+    <div className="mt-3 mb-3 container fluid d-flex align-items-center">
+      <input
+        ref={inputRef} // Assign the ref to the input element
+        className="z-0 position-relative form-control form-control-lg"
+        type="text"
+        placeholder="Search"
+        aria-label=".form-control-lg example"
+        value={searchText}
+        onChange={(e) => setSearchText(e.target.value)}
+        onKeyDown={handleKeyDown} // Call handleKeyPress function on key press
+      />
+      <img
+        src="src\assets\search.svg"
+        alt="Logo"
+        width="40"
+        height="40"
+        className={`z-1 d-inline-block align-text-top ${
+          vibrate && "vibrate-animation"
+        }`}
+        draggable="false"
+        onMouseEnter={() => setVibrate(true)}
+        onAnimationEnd={() => setVibrate(false)}
+        onClick={handleSearch}
+      />
     </div>
   );
 }

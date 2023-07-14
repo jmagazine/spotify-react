@@ -1,32 +1,17 @@
 function Navbar() {
   return (
-    <nav
-      className="navbar bg-body-tertiary"
-      style={{
-        padding: "0",
-      }}
-    >
-      <div
-        className="container-fluid"
-        style={{ marginTop: "0", backgroundColor: "#121212" }}
-      >
+    <nav className="p-0 navbar bg-body-tertiary">
+      <div className="bg-dark container-fluid d-flex align-items-center">
         <a
-          className="navbar-brand"
+          className="d-flex text-white fs-1 navbar-brand align-items-center"
           href="#"
-          style={{
-            padding: "20px",
-            fontSize: "2.1rem",
-            color: "#FFFFFF",
-            margin: "0",
-          }}
         >
           <img
             src="src/assets/spotify.png"
             alt="Logo"
-            width="55"
-            height="55"
-            className="d-inline-block align-text-top"
-            style={{ marginRight: "8px" }}
+            width="70"
+            height="70"
+            className="me-2 d-inline-block"
           />
           Spotify
         </a>
