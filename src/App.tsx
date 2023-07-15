@@ -4,11 +4,11 @@ import "bootstrap/dist/js/bootstrap.bundle";
 import SearchBar from "./components/SearchBar/SearchBar";
 import SongsContainer from "./components/SongsContainer";
 import { useEffect, useState } from "react";
-import { Track } from "./Api";
 import Login from "./Login";
+import AudioPlayer from "./components/AudioPlayer";
 
 function App() {
-  const [tracks, setTracks] = useState<Track[]>([]);
+  const [tracks, setTracks] = useState<Spotify.Track[]>([]);
   const [token, setToken] = useState("");
   useEffect(() => {
     async function getToken() {
@@ -22,35 +22,31 @@ function App() {
 
   const tokenView = (
     <>
-      <div className="p-0 d-flex mb-3 flex-column justify-content-center">
+      <div
+        className="position-relative z-0 p-0 d-flex mb-3 flex-column justify-content-center"
+        style={{ minHeight: "100vh" }}
+      >
         <Navbar />
         <SearchBar setTracks={setTracks} />
         <SongsContainer tracks={tracks} />
+      </div>
+      <div
+        className="d-flex flex-column position-fixed bottom-0 z-1 bg-white"
+        style={{ width: "100%" }}
+      >
+        <AudioPlayer track={tracks[0]} token={token} />
       </div>
     </>
   );
 
   const loginView = (
-    <>
-      <div
-        style={{
-          display: "flex",
-          flexDirection: "column",
-        }}
-      >
-        <Navbar />
-        <SearchBar setTracks={setTracks} />
-        <div
-          style={{
-            marginTop: "20px",
-            display: "flex",
-            justifyContent: "center",
-          }}
-        >
-          <Login />
-        </div>
+    <div className="p-0 d-flex mb-3 flex-column justify-content-center">
+      <Navbar />
+      <SearchBar setTracks={setTracks} />
+      <div className="d-flex justify-content-center">
+        <Login />
       </div>
-    </>
+    </div>
   );
 
   return token !== "" ? tokenView : loginView;

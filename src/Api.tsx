@@ -1,14 +1,5 @@
 /* eslint-disable react-refresh/only-export-components */
 "use strict";
-interface Track {
-  id: string;
-  title: string;
-  artists: string[];
-  duration: number;
-  link: string;
-  image: Image;
-  preview: string;
-}
 
 interface Image {
   height: number;
@@ -47,7 +38,7 @@ async function getAccessToken() {
 
 async function search(text: string, token: string) {
   const q = text.split(" ").join("+");
-  const trackList: Track[] = [];
+  const trackList: Spotify.Track[] = [];
   if (text)
     try {
       const searchQuery = {
@@ -65,19 +56,7 @@ async function search(text: string, token: string) {
       const tracks = data.tracks.items;
       for (let i = 0; i < Object.keys(tracks).length; i++) {
         const track = tracks[i];
-        const t: Track = {
-          id: track.id,
-          title: track.name,
-          artists: [],
-          duration: track.duration_ms,
-          link: track.external_urls.spotify,
-          image: track.album.images[1],
-          preview: track.preview_url,
-        };
-        for (let j = 0; j < track.artists.length; j++) {
-          t.artists.push(track.artists[j].name);
-        }
-        trackList.push(t);
+        trackList.push(track);
       }
       return trackList;
     } catch (err) {
@@ -86,4 +65,3 @@ async function search(text: string, token: string) {
 }
 
 export default search;
-export type { Track };

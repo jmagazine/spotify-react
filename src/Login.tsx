@@ -1,6 +1,6 @@
 function Login() {
   const handleButtonClick = () => {
-    window.location.href = "http://localhost:4000/auth/login";
+    window.location.href = "http://localhost:4000/auth/token";
   };
   return (
     <button

@@ -150,9 +150,13 @@ router.get("/search/:query", async (req, res) => {
 });
 
 router.get("/auth/token", (req, res) => {
-  res.json({
-    access_token: access_token,
-  });
+  if (res) {
+    res.json({
+      access_token: access_token,
+    });
+  } else {
+    res.redirect("/auth/login");
+  }
 });
 
 module.exports = router;

@@ -1,10 +1,7 @@
 import React, { useState, useRef } from "react";
 import "./SearchBar.css";
-import { Track } from "./../../Api";
-import search from "./../../Api";
-import SongsContainer from "../SongsContainer";
 interface Props {
-  setTracks: React.Dispatch<React.SetStateAction<Track[]>>;
+  setTracks: React.Dispatch<React.SetStateAction<Spotify.Track[]>>;
 }
 function SearchBar({ setTracks }: Props) {
   const [vibrate, setVibrate] = useState(false);
@@ -34,10 +31,14 @@ function SearchBar({ setTracks }: Props) {
   };
 
   return (
-    <div className="mt-3 mb-3 container fluid d-flex align-items-center">
+    <div
+      className="bg-dark container fluid d-flex justify-content-center align-items-center"
+      style={{ maxWidth: "100vw" }}
+    >
       <input
         ref={inputRef} // Assign the ref to the input element
         className="z-0 position-relative form-control form-control-lg"
+        style={{ maxWidth: "60vw" }}
         type="text"
         placeholder="Search"
         aria-label=".form-control-lg example"
