@@ -49,7 +49,7 @@ function App() {
     </div>
   );
 
-  return token !== "" ? tokenView : loginView;
+  return token !== "" && token !== undefined ? tokenView : loginView;
 }
 
 export default App;

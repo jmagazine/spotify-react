@@ -2,7 +2,7 @@ import "bootstrap/dist/css/bootstrap.css";
 import { useState, useEffect } from "react";
 
 interface Props {
-  token: String;
+  token: string;
   track: Spotify.Track | undefined;
 }
 
@@ -24,7 +24,7 @@ function AudioPlayer({ token, track }: Props) {
     window.onSpotifyWebPlaybackSDKReady = () => {
       const player = new window.Spotify.Player({
         name: "Web Playback SDK",
-        getOAuthToken: (cb: Function) => {
+        getOAuthToken: (cb) => {
           cb(token);
         },
         volume: 0.5,
@@ -43,28 +43,6 @@ function AudioPlayer({ token, track }: Props) {
       player.connect();
     };
   }, []);
-
-  if (player) {
-    player.addListener("player_state_changed", (state) => {
-      if (!state) {
-        return;
-      }
-
-      setTrack(state.track_window.current_track);
-      setPaused(state.paused);
-
-      player.getCurrentState().then((state) => {
-        console.log(state);
-        if (state) {
-          setActive(true);
-          setPostion(state.position);
-          setDuration(state.duration);
-        } else {
-          setActive(false);
-        }
-      });
-    });
-  }
 
   return (
     <div className="d-flex flex-column align-items-center">
