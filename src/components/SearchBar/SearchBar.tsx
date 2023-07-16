@@ -45,7 +45,11 @@ function SearchBar({ setTracks }: Props) {
         value={searchText}
         onChange={(e) => {
           setSearchText(e.target.value);
-          if (e.target.value.length > 1) handleSearch();
+          if (e.target.value.length > 1) {
+            handleSearch();
+          } else {
+            setTracks([]);
+          }
         }}
         onKeyDown={handleKeyDown} // Call handleKeyPress function on key press
       />
