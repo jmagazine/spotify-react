@@ -96,7 +96,8 @@ router.get("/auth/login", (req, res) => {
   let scope =
     "streaming \
     user-read-email \
-    user-read-private";
+    user-read-private \
+    user-modify-playback-state";
 
   let state = generateRandomString(16);
 

@@ -1,79 +1,101 @@
-import "bootstrap/dist/css/bootstrap.css";
 import { useState, useEffect } from "react";
 
 interface Props {
   token: string;
-  track: Spotify.Track | undefined;
 }
 
-function AudioPlayer({ token, track }: Props) {
-  const [player, setPlayer] = useState<Spotify.Player | undefined>(undefined);
-  const [isPaused, setPaused] = useState(false);
+const track = {
+  name: "",
+  album: {
+    images: [{ url: "" }],
+  },
+  artists: [{ name: "" }],
+};
+
+function AudioPlayer({ token }: Props) {
+  const [is_paused, setPaused] = useState(false);
   const [is_active, setActive] = useState(false);
+  const [player, setPlayer] = useState<Spotify.Player | undefined>(undefined);
   const [current_track, setTrack] = useState(track);
-  const [position, setPostion] = useState(0);
-  const [duration, setDuration] = useState(0);
+  const [ready, setReady] = useState(false); // Flag to track if the event listener is registered
 
   useEffect(() => {
-    const script = document.createElement("script");
-    script.src = "https://sdk.scdn.co/spotify-player.js";
-    script.async = true;
+    if (!ready) {
+      const script = document.createElement("script");
+      script.src = "https://sdk.scdn.co/spotify-player.js";
+      script.async = true;
 
-    document.body.appendChild(script);
+      document.body.appendChild(script);
 
-    window.onSpotifyWebPlaybackSDKReady = () => {
-      const player = new window.Spotify.Player({
-        name: "Web Playback SDK",
-        getOAuthToken: (cb) => {
-          cb(token);
-        },
-        volume: 0.5,
-      });
+      window.onSpotifyWebPlaybackSDKReady = () => {
+        if (!ready) {
+          const player = new window.Spotify.Player({
+            name: "React app",
+            getOAuthToken: (cb) => {
+              cb(token);
+            },
+            volume: 0.5,
+          });
 
-      setPlayer(player);
+          setPlayer(player);
+          setReady(true); // Set the flag to true to prevent multiple event listener registrations
 
-      player.addListener("ready", ({ device_id }: any) => {
-        console.log("Ready with Device ID", device_id);
-      });
+          player.connect().then((success) => {
+            if (success) {
+              console.log(
+                "The Web Playback SDK successfully connected to Spotify!"
+              );
+            }
+          });
 
-      player.addListener("not_ready", ({ device_id }: any) => {
-        console.log("Device ID has gone offline", device_id);
-      });
+          player.addListener("ready", ({ device_id }) => {
+            console.log("Ready with Device ID", device_id);
+          });
 
-      player.connect();
-    };
-  }, []);
+          player.addListener("not_ready", ({ device_id }) => {
+            console.log("Device ID has gone offline", device_id);
+          });
 
-  return (
-    <div className="d-flex flex-column align-items-center">
-      <h1>Now Playing</h1>
-      <div className="position-relative">
-        <img
-          src={track ? track.image.url : ""}
-          className="card-img-top mb-3 z-0"
-          style={{ maxWidth: "150px", maxHeight: "150px" }}
-          alt="..."
-        />
-        <img
-          className="position-absolute top-50 start-50 translate-middle z-1"
-          src={isPaused ? "src/assets/play.png" : "src/assets/pause.png"}
-          style={{ maxWidth: "100px", maxHeight: "100px" }}
-          alt="Play/Pause"
-        />
+          player.addListener("player_state_changed", (state) => {
+            if (!state) {
+              return;
+            }
+            console.log("state", state);
+            setTrack(state.track_window.current_track);
+            setPaused(state.paused);
+
+            player.getCurrentState().then((state) => {
+              !state ? setActive(false) : setActive(true);
+            });
+          });
+        }
+      };
+    }
+  }, [ready]);
+
+  if (!is_active) {
+    console.log(ready);
+    return (
+      <div className="d-flex bottom-0">
+        <div className="main-wrapper">
+          <b>
+            Instance not active. Transfer your playback using your Spotify app{" "}
+          </b>
+        </div>
       </div>
-      <div
-        style={{ minWidth: "60vw" }}
-        className="progress mb-3"
-        role="progressbar"
-        aria-label="Basic example"
-        aria-valuenow={0}
-        aria-valuemin={0}
-        aria-valuemax={duration}
-      >
-        <div className="progress-bar w-25"></div>
-      </div>
-    </div>
-  );
+    );
+  } else {
+    return (
+      <>
+        <div className="container">
+          <div className="main-wrapper">
+            <b> Instance active.</b>
+            <img></img>
+          </div>
+        </div>
+      </>
+    );
+  }
 }
 
 export default AudioPlayer;

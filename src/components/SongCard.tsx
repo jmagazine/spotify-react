@@ -11,34 +11,50 @@ function SongCard({ track }: Props) {
   const [audio, setAudio] = useState<HTMLAudioElement | null>(null);
   let icon = playing ? "pause" : "play";
 
-  // const handleClick = () => {
-  //   if (!audio) {
-  //     const newAudio = new Audio(track.);
-  //     setAudio(newAudio);
-  //     newAudio.play();
-  //     setPlaying(true);
-  //   } else {
-  //     if (playing) {
-  //       audio.pause();
-  //     } else {
-  //       audio.play();
-  //     }
-  //     setPlaying(!playing);
-  //   }
-  // };
-
   return (
-    <div className="card d-flex flex-column" style={{ width: "10" }}>
-      <img src={track.image.url} className="card-img-top" alt="..." />
-      <div className="card-body d-flex flex-column flex-grow-1">
-        <h5 className="card-title">{track.title}</h5>
-        <p className="card-text">{track.artists.join(",")}</p>
-        <a
-          href={track.uri}
-          className="d-flex flex-column btn btn-primary fs-4 mt-auto"
+    <div
+      className={`d-flex rounded-1 align-items-center 
+    border-top border-end border-dark
+     bg-body-secondary ${hovered && "bg-dark-subtle"}`}
+      onMouseEnter={() => {
+        setHovered(true);
+      }}
+      onMouseLeave={() => {
+        setHovered(false);
+      }}
+      style={{ width: "60vw", height: "15vh" }}
+    >
+      <img
+        className="p-3 rounded-5"
+        style={{ width: "10%" }}
+        src={!track || !track.image || !track.image.url ? "" : track.image.url}
+        alt={track.title}
+      />
+      <div
+        className="ms-1 d-flex flex-column justify-content-start"
+        style={{ maxWidth: "50vw" }}
+      >
+        <div
+          style={{
+            maxWidth: "50vw",
+            overflow: "hidden",
+            textOverflow: "ellipsis",
+          }}
         >
-          Listen on Spotify
-        </a>
+          <h1
+            style={{
+              maxWidth: "50vw",
+              overflow: "hidden",
+              textOverflow: "ellipsis",
+              whiteSpace: "nowrap",
+            }}
+          >
+            {track.title}
+          </h1>
+        </div>
+        <div>
+          <h5>{track.artists.join(", ")}</h5>
+        </div>
       </div>
     </div>
   );
