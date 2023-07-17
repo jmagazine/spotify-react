@@ -16,7 +16,6 @@ function App() {
       const json = await response.json();
       setToken(json.access_token);
     }
-
     getToken();
   }, []);
 
