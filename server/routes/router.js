@@ -1,6 +1,7 @@
 "use strict";
 require("dotenv").config({
-  path: "/etc/secrets/.env",
+  path: "C:/Users/joshm/Documents/code/spotify-react/.env",
+  // path: "/etc/secrets/.env",
 });
 const express = require("express");
 const router = express.Router();
@@ -50,7 +51,7 @@ async function search(text, token) {
       `https://api.spotify.com/v1/search?q=${text}&type=track`,
       searchQuery
     ).then((data) => {
-      console.log(data);
+      return data;
     });
 
     const data = await response.json();
