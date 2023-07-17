@@ -12,7 +12,9 @@ function SearchBar({ setTracks }: Props) {
   const handleSearch = async () => {
     const query = searchText.split(" ").join("+");
     try {
-      const response = await fetch(`http://localhost:4000/search/${query}`);
+      const response = await fetch(
+        `https://spotify-search-p8vf.onrender.com/search/${query}`
+      );
       if (response.ok) {
         const data = await response.json();
         setTracks(data);

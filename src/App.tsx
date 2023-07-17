@@ -11,11 +11,14 @@ function App() {
   const [token, setToken] = useState("");
   useEffect(() => {
     async function getToken() {
-      const response = await fetch("http://localhost:4000/auth/token");
+      const response = await fetch(
+        "https://spotify-search-p8vf.onrender.com/auth/token"
+      );
       const json = await response.json();
       setToken(json.access_token);
     }
     getToken();
+    console.log(token);
   }, []);
 
   const tokenView = (
