@@ -5,7 +5,6 @@ require("dotenv").config({
 const express = require("express");
 const router = express.Router();
 const request = require("request");
-let access_token;
 let host;
 if (process.env.NODE_ENV === "production") {
   host = "https://spotify-search-p8vf.onrender.com";
@@ -30,12 +29,12 @@ async function getAccessToken() {
       authOptions
     );
     const data = await response.json();
-    const token = data.access_token;
-    return token;
+    return data.access_token;
   } catch (err) {
     console.log("Error: " + err);
   }
 }
+
 async function search(text, token) {
   const trackList = [];
   try {
@@ -50,7 +49,10 @@ async function search(text, token) {
     const response = await fetch(
       `https://api.spotify.com/v1/search?q=${text}&type=track`,
       searchQuery
-    );
+    ).then((data) => {
+      console.log(data);
+    });
+
     const data = await response.json();
     const tracks = data.tracks.items;
     for (let i = 0; i < Object.keys(tracks).length; i++) {
@@ -78,15 +80,20 @@ async function search(text, token) {
       fetch(
         "https://api.spotify.com/v1/tracks/3asFGFY3uLjMDmML1p0tYm",
         options
-      ).then((res) => {
-        // console.log(response);
-      });
+      );
     }
     return trackList;
   } catch (err) {
     console.log(`Error: ${err}`);
   }
 }
+
+router.get("/search/:query", async (req, res) => {
+  const token = await getAccessToken();
+  const trackList = await search(req.params.query, token);
+  res.send(trackList);
+});
+
 const generateRandomString = function (length) {
   let text = "";
   let possible =
@@ -140,25 +147,18 @@ router.get("/auth/callback", (req, res) => {
     },
     json: true,
   };
-
-  console.log(authOptions.form.redirect_uri);
   request.post(authOptions, function (error, response, body) {
     if (!error && response.statusCode === 200) {
-      access_token = body.access_token;
       res.redirect("https://master--deft-sprinkles-667efb.netlify.app/");
     }
   });
 });
 
-router.get("/search/:query", async (req, res) => {
-  const token = await getAccessToken();
-  const trackList = await search(req.params.query, token);
-  res.send(trackList);
-});
-
 router.get("/auth/token", (req, res) => {
-  res.json({
-    access_token: access_token,
+  getAccessToken().then((token) => {
+    res.json({
+      access_token: token,
+    });
   });
 });
 

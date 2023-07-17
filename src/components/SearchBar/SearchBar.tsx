@@ -16,6 +16,7 @@ function SearchBar({ setTracks }: Props) {
         `https://spotify-search-p8vf.onrender.com/search/${query}`
       );
       if (response.ok) {
+        console.log(response);
         const data = await response.json();
         setTracks(data);
       } else {
