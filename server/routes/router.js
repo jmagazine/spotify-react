@@ -6,6 +6,12 @@ const express = require("express");
 const router = express.Router();
 const request = require("request");
 let access_token;
+let host;
+if (process.env.NODE_ENV === "production") {
+  host = "https://example.com/";
+} else {
+  host = "http://localhost:4000/";
+}
 
 async function getAccessToken() {
   try {
@@ -104,7 +110,7 @@ router.get("/auth/login", (req, res) => {
     response_type: "code",
     client_id: process.env.clientId,
     scope: scope,
-    redirect_uri: "http://localhost:4000/auth/callback",
+    redirect_uri: host + "auth/callback",
     state: state,
   });
 
@@ -121,7 +127,7 @@ router.get("/auth/callback", (req, res) => {
     url: "https://accounts.spotify.com/api/token",
     form: {
       code: code,
-      redirect_uri: "http://localhost:4000/auth/callback",
+      redirect_uri: host + "/auth/callback",
       grant_type: "authorization_code",
     },
     headers: {
@@ -138,7 +144,7 @@ router.get("/auth/callback", (req, res) => {
   request.post(authOptions, function (error, response, body) {
     if (!error && response.statusCode === 200) {
       access_token = body.access_token;
-      res.redirect("localhost:5173");
+      res.redirect("https://master--deft-sprinkles-667efb.netlify.app/");
     }
   });
 });
