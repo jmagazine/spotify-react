@@ -8,7 +8,7 @@ const request = require("request");
 let access_token;
 let host;
 if (process.env.NODE_ENV === "production") {
-  host = "https://example.com/";
+  host = "https://spotify-search-p8vf.onrender.com";
 } else {
   host = "http://localhost:4000/";
 }
