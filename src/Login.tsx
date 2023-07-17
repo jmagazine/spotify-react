@@ -1,6 +1,7 @@
 function Login() {
   const handleButtonClick = () => {
-    window.location.href = "";
+    window.location.href =
+      "https://spotify-search-p8vf.onrender.com/auth/login";
   };
   return (
     <button
