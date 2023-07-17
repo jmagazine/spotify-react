@@ -1,8 +1,6 @@
 import React, { useState, useRef } from "react";
 import "./SearchBar.css";
 import { Track } from "./../../Api";
-import search from "./../../Api";
-import SongsContainer from "../SongsContainer";
 interface Props {
   setTracks: React.Dispatch<React.SetStateAction<Track[]>>;
 }

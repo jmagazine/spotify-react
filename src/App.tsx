@@ -1,6 +1,5 @@
 import Navbar from "./components/Navbar/Navbar";
 import "bootstrap/dist/css/bootstrap.css";
-import "bootstrap/dist/js/bootstrap.bundle";
 import SearchBar from "./components/SearchBar/SearchBar";
 import SongsContainer from "./components/SongsContainer";
 import { useEffect, useState } from "react";
