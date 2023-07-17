@@ -1,5 +1,6 @@
 "use strict";
-require("dotenv").config({
+const dotenv = require("dotenv");
+dotenv.config({
   path: "C:/Users/joshm/Documents/code/spotify-api/spotify-react/.env",
 });
 const express = require("express");
