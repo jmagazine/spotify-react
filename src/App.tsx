@@ -15,7 +15,7 @@ function App() {
         "https://spotify-search-p8vf.onrender.com/auth/token"
       );
       const json = await response.json();
-      setToken(json.access_token);
+      setToken(json.access_token ? json.access_token : "");
     }
     getToken();
     console.log(token);
