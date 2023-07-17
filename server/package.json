@@ -6,7 +6,7 @@
   "scripts": {
     "server": "node index.js",
     "start": "node index.js",
-    "build": "npm i"
+    "build": "npm i, npm install node-fetch"
   },
   "keywords": [],
   "author": "",
