@@ -1,10 +1,10 @@
-import { config } from "dotenv";
-config({
+"use strict";
+require("dotenv").config({
   path: "C:/Users/joshm/Documents/code/spotify-api/spotify-react/.env",
 });
-import { Router } from "express";
-const router = Router();
-import { post } from "request";
+const express = require("express");
+const router = express.Router();
+const request = require("request");
 let access_token;
 
 async function getAccessToken() {
@@ -135,7 +135,7 @@ router.get("/auth/callback", (req, res) => {
     json: true,
   };
 
-  post(authOptions, function (error, response, body) {
+  request.post(authOptions, function (error, response, body) {
     if (!error && response.statusCode === 200) {
       access_token = body.access_token;
       res.redirect("localhost:5173");
@@ -155,4 +155,4 @@ router.get("/auth/token", (req, res) => {
   });
 });
 
-export default router;
+module.exports = router;
