@@ -1,4 +1,3 @@
-"use strict";
 import { config } from "dotenv";
 config({
   path: "C:/Users/joshm/Documents/code/spotify-api/spotify-react/.env",
