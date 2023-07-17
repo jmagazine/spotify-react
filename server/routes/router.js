@@ -141,6 +141,7 @@ router.get("/auth/callback", (req, res) => {
     json: true,
   };
 
+  console.log(authOptions.form.redirect_uri);
   request.post(authOptions, function (error, response, body) {
     if (!error && response.statusCode === 200) {
       access_token = body.access_token;
