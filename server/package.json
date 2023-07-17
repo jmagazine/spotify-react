@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
-    "build": "npm i"
+    "build": "concurrently \"npm i\" \"npm install dotenv\""
   },
   "keywords": [],
   "author": "",
