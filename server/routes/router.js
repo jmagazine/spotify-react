@@ -110,7 +110,7 @@ router.get("/auth/login", (req, res) => {
     response_type: "code",
     client_id: process.env.clientId,
     scope: scope,
-    redirect_uri: host + "auth/callback",
+    redirect_uri: "https://master--deft-sprinkles-667efb.netlify.app/",
     state: state,
   });
 
