@@ -162,4 +162,3 @@ router.get("/auth/token", (req, res) => {
 });
 
 module.exports = router;
-module.exports = host;
