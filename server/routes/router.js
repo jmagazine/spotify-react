@@ -1,5 +1,7 @@
 "use strict";
-require("dotenv");
+require("dotenv").config({
+  path: "/etc/secrets/.env",
+});
 const express = require("express");
 const router = express.Router();
 const request = require("request");
