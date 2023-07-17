@@ -151,8 +151,8 @@ router.get("/auth/callback", (req, res) => {
 });
 
 router.get("/search/:query", async (req, res) => {
-  const token = await getAccessToken();
-  const trackList = await search(req.params.query, token);
+  console.log("searching");
+  const trackList = await search(req.params.query, access_token);
   res.send(trackList);
 });
 
