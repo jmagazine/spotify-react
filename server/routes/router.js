@@ -1,7 +1,6 @@
 "use strict";
 require("dotenv").config({
-  path: "C:/Users/joshm/Documents/code/spotify-react/.env",
-  // path: "/etc/secrets/.env",
+  path: "/etc/secrets/.env",
 });
 const express = require("express");
 const router = express.Router();
