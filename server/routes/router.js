@@ -5,6 +5,8 @@ require("dotenv").config({
 const express = require("express");
 const router = express.Router();
 const request = require("request");
+const fetch = require("node-fetch");
+
 let host;
 if (process.env.NODE_ENV === "production") {
   host = "https://spotify-search-p8vf.onrender.com";
@@ -24,6 +26,7 @@ async function getAccessToken() {
       )}&client_secret=${encodeURIComponent(process.env.clientSecret)}`,
       json: true,
     };
+    console.log("here");
     const response = await fetch(
       "https://accounts.spotify.com/api/token",
       authOptions
