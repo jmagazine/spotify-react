@@ -5,7 +5,7 @@ configDotenv({ path: "/etc/secrets/.env" });
 import { Router } from "express";
 const router = Router();
 import request from "request";
-import fetch from "node-fetch/src";
+import fetch from "node-fetch/src/index.js";
 
 let host;
 if (process.env.NODE_ENV === "production") {
@@ -26,7 +26,6 @@ async function getAccessToken() {
       )}&client_secret=${encodeURIComponent(process.env.clientSecret)}`,
       json: true,
     };
-    console.log("here");
     const response = await fetch(
       "https://accounts.spotify.com/api/token",
       authOptions
@@ -165,4 +164,4 @@ router.get("/auth/token", (req, res) => {
   });
 });
 
-module.exports = router;
+export default router;
