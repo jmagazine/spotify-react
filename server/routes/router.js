@@ -1,10 +1,10 @@
 "use strict";
-require("dotenv").config({
-  path: "/etc/secrets/.env",
-});
-const express = require("express");
-const router = express.Router();
-const request = require("request");
+import { configDotenv } from "dotenv";
+
+configDotenv({ path: "/etc/secrets/.env" });
+import { Router } from "express";
+const router = Router();
+import request from "request";
 import fetch from "node-fetch/src";
 
 let host;
