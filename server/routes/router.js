@@ -34,12 +34,12 @@ async function getAccessToken() {
       authOptions
     );
     const data = await response.json();
-    const token = data.access_token;
-    return token;
+    return data.access_token;
   } catch (err) {
     console.log("Error: " + err);
   }
 }
+
 
 async function search(text, token) {
   const trackList = [];
@@ -55,7 +55,10 @@ async function search(text, token) {
     const response = await fetch(
       `https://api.spotify.com/v1/search?q=${text}&type=track`,
       searchQuery
-    );
+    ).then((data) => {
+      return data;
+    });
+
     const data = await response.json();
     const tracks = data.tracks.items;
     for (let i = 0; i < tracks.length; i++) {
@@ -103,6 +106,7 @@ router.get("/auth/login", (req, res) => {
     client_id: process.env.clientId,
     scope: scope,
     redirect_uri: host + "/auth/callback",
+    redirect_uri: host + "/auth/callback",
     state: state,
   });
 
@@ -120,6 +124,7 @@ router.get("/auth/callback", (req, res) => {
     form: {
       code: code,
       redirect_uri: host + "/auth/callback",
+      redirect_uri: host + "/auth/callback",
       grant_type: "authorization_code",
     },
     headers: {
@@ -132,19 +137,12 @@ router.get("/auth/callback", (req, res) => {
     },
     json: true,
   };
-
   request.post(authOptions, function (error, response, body) {
     if (!error && response.statusCode === 200) {
       access_token = body.access_token;
       res.redirect("https://master--deft-sprinkles-667efb.netlify.app/");
     }
   });
-});
-
-router.get("/search/:query", async (req, res) => {
-  const token = await getAccessToken();
-  const trackList = await search(req.params.query, token);
-  res.send(trackList);
 });
 
 router.get("/auth/token", (req, res) => {
@@ -159,4 +157,5 @@ router.get("/auth/token", (req, res) => {
   });
 });
 
+export default router;
 export default router;

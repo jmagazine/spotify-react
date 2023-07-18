@@ -1,3 +1,5 @@
+import image from "../../assets/spotify.png";
+
 function Navbar() {
   return (
     <nav className="p-0 navbar bg-body-tertiary">
@@ -7,7 +9,7 @@ function Navbar() {
           href="#"
         >
           <img
-            src="src/assets/spotify.png"
+            src={image}
             alt="Logo"
             width="70"
             height="70"
