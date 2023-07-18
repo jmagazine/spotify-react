@@ -1,10 +1,14 @@
 interface Props {
-  icon: string;
+  isPlaying: boolean;
 }
-function PlayButton({ icon }: Props) {
+
+import play from "../assets/play.png";
+import pause from "../assets/pause.png";
+
+function PlayButton({ isPlaying }: Props) {
   return (
     <img
-      src={"./src/assets/" + icon + ".png"}
+      src={isPlaying ? play : pause}
       alt="..."
       style={{
         position: "absolute",

@@ -1,6 +1,8 @@
 import React, { useState, useRef } from "react";
 import "./SearchBar.css";
 import { Track } from "./../../Api";
+
+import image from "../../assets/search.svg";
 interface Props {
   setTracks: React.Dispatch<React.SetStateAction<Track[]>>;
 }
@@ -48,7 +50,7 @@ function SearchBar({ setTracks }: Props) {
           onKeyDown={handleKeyDown} // Call handleKeyPress function on key press
         />
         <img
-          src="./src/assets/search.svg"
+          src={image}
           alt="Logo"
           width="40"
           height="40"

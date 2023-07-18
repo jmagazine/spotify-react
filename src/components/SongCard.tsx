@@ -10,7 +10,6 @@ function SongCard({ track }: Props) {
   const [playing, setPlaying] = useState(false);
   const [hovered, setHovered] = useState(false);
   const [audio, setAudio] = useState<HTMLAudioElement | null>(null);
-  let icon = playing ? "pause" : "play";
 
   const handleClick = () => {
     if (!audio) {
@@ -47,7 +46,7 @@ function SongCard({ track }: Props) {
           alt="..."
           style={{ position: "relative", zIndex: 0 }}
         />
-        {hovered && <PlayButton icon={icon} />}
+        {hovered && <PlayButton isPlaying={playing} />}
       </div>
       <div className="card-body d-flex flex-column">
         <div>
