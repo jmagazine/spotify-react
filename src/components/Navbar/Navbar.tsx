@@ -1,3 +1,5 @@
+import image from "../../assets/spotify.png";
+
 function Navbar() {
   return (
     <nav
@@ -21,7 +23,7 @@ function Navbar() {
           }}
         >
           <img
-            src="./assets/spotify.png"
+            src={image}
             alt="Logo"
             width="55"
             height="55"
