@@ -5,8 +5,7 @@ require("dotenv").config({
 const express = require("express");
 const router = express.Router();
 const request = require("request");
-console.log("ok");
-const fetch = require("node-fetch");
+import fetch from "node-fetch/src";
 
 let host;
 if (process.env.NODE_ENV === "production") {
