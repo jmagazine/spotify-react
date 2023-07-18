@@ -40,7 +40,6 @@ async function getAccessToken() {
   }
 }
 
-
 async function search(text, token) {
   const trackList = [];
   try {
@@ -157,5 +156,4 @@ router.get("/auth/token", (req, res) => {
   });
 });
 
-export default router;
 export default router;

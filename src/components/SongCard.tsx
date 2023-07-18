@@ -10,6 +10,22 @@ function SongCard({ track }: Props) {
   const [hovered, setHovered] = useState(false);
   const [audio, setAudio] = useState<HTMLAudioElement | null>(null);
 
+  const handleClick = () => {
+    if (!audio) {
+      const newAudio = new Audio(track.link);
+      setAudio(newAudio);
+      newAudio.play();
+      setPlaying(true);
+    } else {
+      if (playing) {
+        audio.pause();
+      } else {
+        audio.play();
+      }
+      setPlaying(!playing);
+    }
+  };
+
   return (
     <div
       className={`d-flex rounded-1 align-items-center 
@@ -26,33 +42,29 @@ function SongCard({ track }: Props) {
       }}
       style={{ width: "60vw", height: "15vh" }}
     >
-      <img
-        className="p-3 rounded-5"
-        style={{ width: "10%" }}
-        src={!track || !track.image || !track.image.url ? "" : track.image.url}
-        alt={track.title}
-      />
-      <div
-        className="ms-1 d-flex flex-column justify-content-start"
-        style={{ maxWidth: "50vw" }}
-      >
-        <div
-          style={{
-            maxWidth: "50vw",
-            overflow: "hidden",
-            textOverflow: "ellipsis",
-          }}
-        >
-          <h1
-            style={{
-              maxWidth: "50vw",
-              overflow: "hidden",
-              textOverflow: "ellipsis",
-              whiteSpace: "nowrap",
-            }}
+      <div onClick={handleClick}>
+        <img
+          src={track.image.url}
+          className="card-img-top"
+          alt="..."
+          style={{ position: "relative", zIndex: 0 }}
+        />
+        {hovered && <PlayButton isPlaying={playing} />}
+      </div>
+      <div className="card-body d-flex flex-column">
+        <div>
+          <h5 className="card-title">{track.title}</h5>
+          <p className="card-text">{track.artists.join(", ")}</p>
+        </div>
+        <div className="mt-auto">
+          <a
+            style={{ minWidth: "100%" }}
+            href={track.link}
+            target="_blank"
+            className="btn btn-primary btn-full-width"
           >
-            {track.title}
-          </h1>
+            Listen on Spotify
+          </a>
         </div>
         <div>
           <h5>{track.artists.join(", ")}</h5>
