@@ -21,7 +21,7 @@ function Navbar() {
           }}
         >
           <img
-            src="src/assets/spotify.png"
+            src="./src/assets/spotify.png"
             alt="Logo"
             width="55"
             height="55"

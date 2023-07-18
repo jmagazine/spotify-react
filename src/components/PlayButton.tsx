@@ -4,7 +4,7 @@ interface Props {
 function PlayButton({ icon }: Props) {
   return (
     <img
-      src={"src/assets/" + icon + ".png"}
+      src={"./src/assets/" + icon + ".png"}
       alt="..."
       style={{
         position: "absolute",

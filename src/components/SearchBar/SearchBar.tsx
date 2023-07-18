@@ -48,7 +48,7 @@ function SearchBar({ setTracks }: Props) {
           onKeyDown={handleKeyDown} // Call handleKeyPress function on key press
         />
         <img
-          src="src\assets\search.svg"
+          src="./src/assets/search.svg"
           alt="Logo"
           width="40"
           height="40"
