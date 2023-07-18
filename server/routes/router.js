@@ -5,6 +5,7 @@ require("dotenv").config({
 const express = require("express");
 const router = express.Router();
 const request = require("request");
+console.log("ok");
 const fetch = require("node-fetch");
 
 let host;
