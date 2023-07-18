@@ -1,11 +1,21 @@
 "use strict";
-require("dotenv").config({
+import { configDotenv } from "dotenv";
+
+// configDotenv({ path: "/etc/secrets/.env" });
+configDotenv({
   path: "C:/Users/joshm/Documents/code/spotify-api/spotify-react/.env",
 });
-const express = require("express");
-const router = express.Router();
-const request = require("request");
-let access_token;
+import { Router } from "express";
+const router = Router();
+import request from "request";
+import fetch from "node-fetch/src/index.js";
+
+let host;
+if (process.env.NODE_ENV === "production") {
+  host = "https://spotify-search-p8vf.onrender.com";
+} else {
+  host = "http://localhost:4000/";
+}
 
 async function getAccessToken() {
   try {
@@ -30,6 +40,7 @@ async function getAccessToken() {
     console.log("Error: " + err);
   }
 }
+
 async function search(text, token) {
   const trackList = [];
   try {
@@ -47,40 +58,26 @@ async function search(text, token) {
     );
     const data = await response.json();
     const tracks = data.tracks.items;
-    for (let i = 0; i < Object.keys(tracks).length; i++) {
-      const track = tracks[i];
-      const t = {
-        id: track.id,
-        title: track.name,
-        artists: [],
-        duration: track.duration_ms,
-        link: track.external_urls.spotify,
-        image: track.album.images[1],
-        preview: track.preview_url,
+    for (let i = 0; i < tracks.length; i++) {
+      const trackData = tracks[i];
+      const track = {
+        id: trackData.id,
+        title: trackData.name,
+        artists: trackData.artists.map((artist) => artist.name),
+        duration: trackData.duration_ms,
+        link: trackData.external_urls.spotify,
+        image: trackData.album.images[1],
+        preview: trackData.preview_url,
       };
-      for (let j = 0; j < track.artists.length; j++) {
-        t.artists.push(track.artists[j].name);
-      }
-      trackList.push(t);
-      const options = {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/x-www-form-urlencoded",
-          Authorization: `Bearer ${token}`,
-        },
-      };
-      fetch(
-        "https://api.spotify.com/v1/tracks/3asFGFY3uLjMDmML1p0tYm",
-        options
-      ).then((res) => {
-        // console.log(response);
-      });
+      trackList.push(track);
     }
+    console.log(trackList);
     return trackList;
   } catch (err) {
     console.log(`Error: ${err}`);
   }
 }
+
 const generateRandomString = function (length) {
   let text = "";
   let possible =
@@ -105,7 +102,7 @@ router.get("/auth/login", (req, res) => {
     response_type: "code",
     client_id: process.env.clientId,
     scope: scope,
-    redirect_uri: "http://localhost:4000/auth/callback",
+    redirect_uri: host + "/auth/callback",
     state: state,
   });
 
@@ -122,7 +119,7 @@ router.get("/auth/callback", (req, res) => {
     url: "https://accounts.spotify.com/api/token",
     form: {
       code: code,
-      redirect_uri: "http://localhost:4000/auth/callback",
+      redirect_uri: host + "/auth/callback",
       grant_type: "authorization_code",
     },
     headers: {
@@ -139,7 +136,7 @@ router.get("/auth/callback", (req, res) => {
   request.post(authOptions, function (error, response, body) {
     if (!error && response.statusCode === 200) {
       access_token = body.access_token;
-      res.redirect("http://localhost:5173");
+      res.redirect("https://master--deft-sprinkles-667efb.netlify.app/");
     }
   });
 });
@@ -151,13 +148,15 @@ router.get("/search/:query", async (req, res) => {
 });
 
 router.get("/auth/token", (req, res) => {
-  if (res) {
-    res.json({
-      access_token: access_token,
-    });
-  } else {
-    res.redirect("/auth/login");
-  }
+  getAccessToken().then((token) => {
+    if (res) {
+      res.json({
+        access_token: token,
+      });
+    } else {
+      res.redirect(host + "/auth/login");
+    }
+  });
 });
 
-module.exports = router;
+export default router;

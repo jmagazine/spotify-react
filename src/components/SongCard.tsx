@@ -9,7 +9,6 @@ function SongCard({ track }: Props) {
   const [playing, setPlaying] = useState(false);
   const [hovered, setHovered] = useState(false);
   const [audio, setAudio] = useState<HTMLAudioElement | null>(null);
-  let icon = playing ? "pause" : "play";
 
   return (
     <div
@@ -21,6 +20,9 @@ function SongCard({ track }: Props) {
       }}
       onMouseLeave={() => {
         setHovered(false);
+      }}
+      onClick={() => {
+        window.location.href = track.link;
       }}
       style={{ width: "60vw", height: "15vh" }}
     >
