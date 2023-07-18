@@ -8,7 +8,7 @@ import pause from "../assets/pause.png";
 function PlayButton({ isPlaying }: Props) {
   return (
     <img
-      src={isPlaying ? play : pause}
+      src={isPlaying ? pause : play}
       alt="..."
       style={{
         position: "absolute",
